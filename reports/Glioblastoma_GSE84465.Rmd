@@ -1,0 +1,80 @@
+---
+title: "11 glioblastomas"
+subtitle: "GEO accession number: GSE84465" 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+# Sample info
+### 23465 genes and 3434 cells
+### 4 integrated samples
+### Link to data: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84465
+#### Cell type information is not given
+
+```{r, message=FALSE, warning=FALSE}
+library(TMExplorer)
+library(scater)
+library(scran)
+library(uwot)
+library(plotly)
+
+source("C:/Users/amunzur/Documents/GitHub/iGEM_2021_project/scripts/utilities.R")
+
+sce <- readRDS("/Users/amunzur/Documents/GitHub/iGEM_2021_project/data/clustered/GSE84465/sce.rds")
+colour_list <- c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3", '#E2201C', '#1D91C0', '#6B3E9A', '#32A028', "deepskyblue", "black")
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+
+gene_name <- "TNF"
+
+df_tsne <- make_df(sce, "TSNE", gene_name)
+p1 <- make_plots_2d(sce, df_tsne, "cluster", "TSNE", colour_list)
+p2 <- make_plots_3d(sce, df_tsne, "cluster", "TSNE", colour_list)
+p4 <- make_plots_2d(sce, df_tsne, gene_name, "TSNE", colour_list)
+
+df_pca <- make_df(sce, "PCA", gene_name)
+p5 <- make_plots_2d(sce, df_pca, "cluster", "PCA", colour_list)
+p6 <- make_plots_3d(sce, df_pca, "cluster", "PCA", colour_list)
+p8 <- make_plots_2d(sce, df_pca, gene_name, "PCA", colour_list)
+
+# p9 <- filter_and_plot(df_tsne, 3, "celltype", gene_name)
+
+```
+
+# TSNE PLOTS
+## TSNE plots showing clusters
+```{r, message=FALSE, warning=FALSE}
+
+p1
+p2
+
+```
+
+## TSNE plot showing the gene counts - TNF
+```{r, message=FALSE, warning=FALSE}
+
+p4
+
+```
+
+# PCA PLOTS
+## PCA plots showing clusters 
+```{r, message=FALSE, warning=FALSE}
+
+p5
+
+```
+
+## 2D PCA plot showing the gene counts - TNF
+```{r, message=FALSE, warning=FALSE}
+
+p8
+
+```
+
+

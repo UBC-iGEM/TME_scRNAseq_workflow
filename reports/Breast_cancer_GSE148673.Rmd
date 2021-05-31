@@ -1,0 +1,85 @@
+---
+title: "Breast Cancer"
+subtitle: "GEO accession number: GSE148673" 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(TMExplorer)
+library(scater)
+library(scran)
+library(uwot)
+library(plotly)
+
+source("C:/Users/amunzur/Documents/GitHub/iGEM_2021_project/scripts/utilities.R")
+
+sce <- readRDS("/Users/amunzur/Documents/GitHub/iGEM_2021_project/data/clustered/GSE72056/sce.rds")
+colour_list <- c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3", '#E2201C', '#1D91C0', '#6B3E9A', '#32A028', "deepskyblue", "black")
+
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+
+df_tsne <- make_df(sce, "TSNE", "TNF")
+p1 <- make_plots_2d(sce, df_tsne, "cluster", "TSNE", colour_list)
+p2 <- make_plots_3d(sce, df_tsne, "cluster", "TSNE", colour_list)
+p3 <- make_plots_2d(sce, df_tsne, "celltype", "TSNE", colour_list)
+p4 <- make_plots_2d(sce, df_tsne, "TNF", "TSNE", colour_list)
+
+df_pca <- make_df(sce, "PCA", "TNF")
+p5 <- make_plots_2d(sce, df_pca, "cluster", "PCA", colour_list)
+p6 <- make_plots_3d(sce, df_pca, "cluster", "PCA", colour_list)
+p7 <- make_plots_2d(sce, df_pca, "celltype", "PCA", colour_list)
+p8 <- make_plots_2d(sce, df_pca, "TNF", "PCA", colour_list)
+
+p9 <- filter_and_plot(df_tsne, 3, "celltype", "TNF")
+
+```
+
+# TSNE PLOTS
+## TSNE plots showing clusters and celltypes
+```{r, message=FALSE, warning=FALSE}
+
+p1
+p2
+p3
+
+```
+
+## TSNE plot showing the gene counts - TNF
+```{r, message=FALSE, warning=FALSE}
+
+p4
+
+```
+
+# PCA PLOTS
+## PCA plots showing clusters and celltypes 
+```{r, message=FALSE, warning=FALSE}
+
+p5
+# p6
+p7
+
+```
+
+## 2D PCA plot showing the gene counts - TNF
+```{r, message=FALSE, warning=FALSE}
+
+p8
+
+```
+
+## Number of cells from each cell type in the sample
+### Data filtered to only keep cells with more than 3 transcripts per cell 
+```{r}
+
+p9
+
+```
+
