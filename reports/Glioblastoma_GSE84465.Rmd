@@ -19,10 +19,11 @@ library(scater)
 library(scran)
 library(uwot)
 library(plotly)
+library(dplyr)
 
-source("C:/Users/amunzur/Documents/GitHub/iGEM_2021_project/scripts/utilities.R")
+source("D:/Users/George/Desktop/rnaSEQ/TME_scRNAseq_workflow/scripts/utilities.R")
 
-sce <- readRDS("/Users/amunzur/Documents/GitHub/iGEM_2021_project/data/clustered/GSE84465/sce.rds")
+sce <- readRDS("D:/Users/George/Desktop/rnaSEQ/TME_scRNAseq_workflow/GSE84465/sce.rds")
 colour_list <- c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3", '#E2201C', '#1D91C0', '#6B3E9A', '#32A028', "deepskyblue", "black")
 
 ```
@@ -42,7 +43,9 @@ p5 <- make_plots_2d(sce, df_pca, "cluster", "PCA", colour_list)
 p6 <- make_plots_3d(sce, df_pca, "cluster", "PCA", colour_list)
 p8 <- make_plots_2d(sce, df_pca, gene_name, "PCA", colour_list)
 
-# p9 <- filter_and_plot(df_tsne, 3, "celltype", gene_name)
+p9 <- filter_and_plot(df_tsne, 3, "celltype", gene_name)
+
+expressionmean = aggregate(.~celltype, df_tsne[,-c(1:4)], mean)
 
 ```
 
@@ -77,4 +80,15 @@ p8
 
 ```
 
+## bar graph showing the cell types - TNF
+```{r, message=FALSE, warning=FALSE}
 
+p9
+
+```
+
+```{r}
+
+p10 = barplot(expressionmean$TNF, names.arg=expressionmean$celltype, main="Average expression per cell", las = 2, col = colour_list)
+
+```
