@@ -98,6 +98,7 @@ p9.3
 
 ```{r}
 
+par(mar = c(10,4,4,2))
 p10 = barplot(expressionmean$TNF, names.arg=expressionmean$celltype, main="Average expression per cell", las = 2, col = colour_list)
 
 ```
